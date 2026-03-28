@@ -1,50 +1,25 @@
-import OpenAI from "openai"
+export const runtime = "nodejs";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+import { createWorker } from "tesseract.js";
 
 export async function POST(req: Request) {
-  try {
 
-    const { imageBase64 } = await req.json()
+  const formData = await req.formData();
+  const file = formData.get("file") as File;
 
-    const response = await openai.responses.create({
-      model: "gpt-4.1-mini",
-      input: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "input_text",
-              text: `Extract the medicines from this prescription.
-Return JSON only:
-{
- "medicines":[
-   {"name":"","dosage":"","frequency":""}
- ]
-}`
-            },
-            {
-              type: "input_image",
-              image_url: `data:image/png;base64,${imageBase64}`,
-              detail: "auto"
-            }
-          ]
-        }
-      ]
-    })
+  if (!file) {
+    return Response.json({ error: "No file uploaded" });
+  }
 
-    return Response.json({
-      result: response.output_text
-    })
+  const buffer = Buffer.from(await file.arrayBuffer());
 
-  } catch (error) {
-  console.error("OPENAI ERROR:", error)
+  const worker = await createWorker("eng");
 
-  return Response.json(
-    { error: String(error) },
-    { status: 500 }
-  )
-}
+  const { data } = await worker.recognize(buffer);
+
+  await worker.terminate();
+
+  return Response.json({
+    text: data.text
+  });
 }
