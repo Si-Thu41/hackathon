@@ -45,7 +45,7 @@ export default async function Page() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
           
           {/* 1. Pharmacist Portal Card (Blue Theme) */}
-          <Link href="/dashboard" className="group relative bg-white rounded-3xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center overflow-hidden">
+          <Link href="/dashboard?userrole=pharmacist" className="group relative bg-white rounded-3xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             
             <div className="relative z-10">
@@ -67,7 +67,7 @@ export default async function Page() {
           </Link>
 
           {/* 2. Administrator Portal Card (Red Theme) */}
-          <Link href="/dashboard" className="group relative bg-white rounded-3xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:border-red-400 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center overflow-hidden">
+          <Link href="/dashboard?userrole=admin" className="group relative bg-white rounded-3xl p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:border-red-400 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-red-50/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             
             <div className="relative z-10">

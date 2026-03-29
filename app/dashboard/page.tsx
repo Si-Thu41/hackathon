@@ -3,17 +3,36 @@ import AdminPanel from "./adminPanel/adminPanel";
 import PharmacistPanel from "./pharmacistPanel/pharmacistPanel";
 import Link from "next/link";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({searchParams}:{searchParams:Promise<{userrole:string}>})
+ {
   const { sessionClaims } = await auth();
+  const params=await searchParams;
+  const userRole=params.userrole;
+  console.log(userRole)
 
   // Grab the role from Clerk metadata
   const role = sessionClaims?.metadata?.role;
-
+  const isAdmin = role === "admin" && userRole === "admin";
+  const isPharmacist = role === "pharmacist" && userRole === "pharmacist";
+  const isMismatch =(role === "admin" && userRole === "pharmacist") ||(role === "pharmacist" && userRole === "admin");
   return (
     <main>
-      {role === "admin" && <AdminPanel />}
-      
-      {role === "pharmacist" && <PharmacistPanel />}
+  {isAdmin && <AdminPanel />}
+    {isPharmacist && <PharmacistPanel />}
+
+    {isMismatch && (
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <div className="bg-red-50 border border-red-300 text-red-800 p-8 rounded-lg max-w-lg text-center">
+          <h1 className="text-2xl font-bold mb-2">Access Denied</h1>
+          <p className="mb-4">
+            Your Clerk role is <strong>{role}</strong> but the query role is <strong>{userRole}</strong>.
+          </p>
+          <p>
+            Please log in with the correct account or contact the administrator for role update.
+          </p>
+        </div>
+      </div>
+    )}
 
       {/* FALLBACK: If they log in but have no role assigned yet */}
       {!role && (
