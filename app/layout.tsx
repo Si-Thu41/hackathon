@@ -33,11 +33,11 @@ export default function RootLayout({
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <Show when="signed-out">
           
-                <SignInButton  forceRedirectUrl="/dashboard">
+                <SignInButton  >
                 <SignText displayText='Sign In'/>
                 </SignInButton>
 
-                 <SignUpButton forceRedirectUrl="/dashboard">
+                 <SignUpButton >
                  <SignText displayText='Sign Up'/>
                  </SignUpButton>
             

@@ -14,11 +14,26 @@ export type Medicine = {
   stock_quantity: number;
   // add other fields as needed
 };
-
+type Sale={
+  revenue:number;
+}
 export default async function AdminPanel() {
 
   const supabase = await getSupabase();
-  const { data: medicines } = await supabase.from('medicines').select() as { data: Medicine[] | null };
+  // Fetch medicines
+  const { data: medicines } = await supabase
+    .from("medicines")
+    .select() as { data: Medicine[] | null };
+
+  // Fetch sales
+  const { data: sales } = await supabase
+    .from("sales")
+    .select("revenue") as {data: Sale[] | null};
+  console.log("Sales data:", sales);
+  const totalOrders = sales?.length ?? 0;
+
+  const totalSales =
+    sales?.reduce((sum, sale) => sum + (sale.revenue ?? 0), 0) ?? 0;
 
   return (
   <div className="min-h-screen bg-slate-50/50 p-6 md:p-8">
@@ -35,7 +50,8 @@ export default async function AdminPanel() {
             </div>
             <div>
               <p className="text-slate-500 text-sm font-medium">Total Sales</p>
-              <h3 className="text-2xl font-bold text-slate-800">฿45,234</h3>
+              <h3 className="text-2xl font-bold text-slate-800">฿{totalSales.toLocaleString()}
+</h3>
             </div>
           </div>
 
@@ -46,7 +62,8 @@ export default async function AdminPanel() {
             </div>
             <div>
               <p className="text-slate-500 text-sm font-medium">Total Orders</p>
-              <h3 className="text-2xl font-bold text-slate-800">128</h3>
+              <h3 className="text-2xl font-bold text-slate-800">{totalOrders}
+</h3>
             </div>
           </div>
 
