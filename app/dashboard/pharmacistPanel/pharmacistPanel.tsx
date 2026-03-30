@@ -6,21 +6,11 @@ import SellMedicineForm from "./sellMedicine";
 import type { Medicine } from "../adminPanel/adminPanel";
 import { useState, useEffect } from "react";
 import Prescription from "@/app/gemini/prescription";
-import QueueActivityChart from "./components/queueActivityChart";
-
-// Mock data for the live queue demo 
-const initialQueue = [
-  { id: "Q-104", patient: "Somchai K.", time: "10:42 AM", status: "Waiting", type: "External Rx" },
-  { id: "Q-105", patient: "Nattapong V.", time: "10:45 AM", status: "Processing", type: "Internal Clinic" },
-  { id: "Q-106", patient: "Priya M.", time: "10:48 AM", status: "Ready", type: "Refill" },
-];
 
 export default function PharmacistPanel(){
     const [count, setCount] = useState(1);
     const [medicines, setMedicines] = useState<Medicine[]>([]);
     const [displayComponent,setDisplayComponent]=useState("prescription");
-
-    const [queue, setQueue] = useState(initialQueue);
 
     function changeDisplayComponent(component: string) {
         setDisplayComponent(component);
@@ -128,61 +118,10 @@ export default function PharmacistPanel(){
                    </div>
                 </div>
 
-               {/* VIEW 2: READ PRESCRIPTION (Queue + Your Prescription Component) */}
+               {/* VIEW 2: READ PRESCRIPTION */}
                 <div className={displayComponent === "prescription" ? "block" : "hidden"}>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
-                    {/* LEFT COLUMN: The Active Queue & Chart (Takes up 2/3 of the screen) */}
-                    <div className="lg:col-span-2 space-y-6">
-                      
-                      <div className="flex justify-between items-end">
-                        <div>
-                          <h2 className="text-xl font-bold text-slate-800">Live Queue</h2>
-                          <p className="text-sm text-slate-500">Patients waiting for dispensing</p>
-                        </div>
-                        <div className="text-2xl font-black text-slate-300">03</div>
-                      </div>
-
-                      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                        <table className="min-w-full text-sm text-left">
-                          <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-100">
-                            <tr>
-                              <th className="px-6 py-4">Token</th>
-                              <th className="px-6 py-4">Patient Name</th>
-                              <th className="px-6 py-4">Source</th>
-                              <th className="px-6 py-4">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-slate-100">
-                            {queue.map((item, i) => (
-                              <tr key={i} className="hover:bg-slate-50 transition">
-                                <td className="px-6 py-4 font-bold text-slate-700">{item.id}</td>
-                                <td className="px-6 py-4 font-semibold text-slate-900">{item.patient}</td>
-                                <td className="px-6 py-4 text-slate-500">{item.type}</td>
-                                <td className="px-6 py-4">
-                                  <span className={`px-3 py-1 text-xs font-bold rounded-full ${
-                                    item.status === 'Waiting' ? 'bg-amber-100 text-amber-700' :
-                                    item.status === 'Processing' ? 'bg-blue-100 text-blue-700' :
-                                    'bg-emerald-100 text-emerald-700'
-                                  }`}>
-                                    {item.status}
-                                  </span>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* ✨ CHART IS NOW SAFELY LOCKED INSIDE THE LEFT COLUMN ✨ */}
-                      <div className="mt-6">
-                        <QueueActivityChart />
-                      </div>
-                    </div>
-
-                    {/* RIGHT COLUMN: YOUR Prescription Component */}
-                    <div className="lg:col-span-1 self-start">
-                            <div className="bg-gradient-to-b from-blue-900 to-slate-900 rounded-2xl p-5 shadow-xl border border-blue-800 text-white relative overflow-hidden h-fit max-w-sm mx-auto flex flex-col">
+                  <div className="max-w-4xl mx-auto">
+                    <div className="bg-gradient-to-b from-blue-900 to-slate-900 rounded-2xl p-5 shadow-xl border border-blue-800 text-white relative overflow-hidden h-fit flex flex-col">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 transform translate-x-10 -translate-y-10"></div>
 
                         <div className="mb-6 relative z-10">
@@ -193,14 +132,13 @@ export default function PharmacistPanel(){
                           <p className="text-blue-200 text-sm mt-1">Upload external prescriptions for instant AI validation.</p>
                         </div>
 
-                        {/* THIS IS YOUR EXACT GEMINI COMPONENT */}
+                        {/* PRESCRIPTION COMPONENT */}
                         <div className="relative z-10 mt-2 bg-white/5 p-4 rounded-xl backdrop-blur-sm border border-white/10 flex-1 overflow-hidden">
                            <Prescription />
                         </div>
                         
                       </div>
                     </div>
-                  </div>
                 </div>
 
               </div>

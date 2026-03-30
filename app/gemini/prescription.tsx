@@ -87,7 +87,7 @@ export default function Prescription() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 px-5 py-10">
+    <div className=" bg-gray-100 px-5 py-10">
       <div className="max-w-2xl mx-auto">
         
         {/* Header */}

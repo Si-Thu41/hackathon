@@ -184,6 +184,7 @@ setNewSale(initialSaleState)
           >
             <option value="cash">Cash</option>
             <option value="card">Card</option>
+            <option value="e-wallet">E-wallet</option>
             <option value="mobile">Mobile Payment</option>
           </select>
         </div>
