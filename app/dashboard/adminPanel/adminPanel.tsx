@@ -99,19 +99,25 @@ export default async function AdminPanel() {
 
         {/* Card 1 */}
           <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-           {/* icon */}
-           </div>
-            <div>
-              <p className="text-slate-500 text-sm font-medium">Total Sales</p>
-          <h3 className="text-2xl font-bold text-slate-800">฿{totalSales.toLocaleString()}</h3>
-          </div>
-          </div>
+    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <div>
+      <p className="text-slate-500 text-sm font-medium">Total Sales</p>
+      <h3 className="text-2xl font-bold text-slate-800">฿{totalSales.toLocaleString()}</h3>
+    </div>
+  </div>
 
-  {/* Card 2 */}
+   {/* Card 2 - Total Orders */}
   <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 flex items-center gap-4">
     <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-      {/* icon */}
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+      </svg>
     </div>
     <div>
       <p className="text-slate-500 text-sm font-medium">Total Orders</p>
@@ -119,10 +125,13 @@ export default async function AdminPanel() {
     </div>
   </div>
 
-  {/* Card 3 */}
+   {/* Card 3 - Low Stock */}
   <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 flex items-center gap-4">
     <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600">
-      {/* icon */}
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+          d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" />
+      </svg>
     </div>
     <div>
       <p className="text-slate-500 text-sm font-medium">Low Stock Items</p>
@@ -132,12 +141,12 @@ export default async function AdminPanel() {
     </div>
   </div>
 
-  {/*  Card 4 */}
+{/* Card 4 - Total Medicines */}
   <div className="bg-white rounded-2xl p-6 shadow-md border border-slate-100 flex items-center gap-4">
     <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-          d="M3 10h11M9 21V3m12 18V9a2 2 0 00-2-2h-6" />
+          d="M19.428 15.341a8 8 0 11-10.77-10.77M8 8l8 8" />
       </svg>
     </div>
     <div>
