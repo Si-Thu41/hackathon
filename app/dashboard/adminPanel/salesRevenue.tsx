@@ -62,22 +62,31 @@ export default function RevenueTrend() {
 
   // Enterprise-Grade Tooltip
   const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-white p-4 rounded-xl shadow-lg border border-slate-100">
-          <p className="font-bold text-slate-800 mb-2">{label}</p>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-            <span className="text-slate-500">Total Revenue:</span>
-            <span className="font-bold text-blue-700">
-              ฿{payload[0].value.toLocaleString()}
-            </span>
-          </div>
+  if (active && payload && payload.length) {
+    const value = payload[0].value;
+    const isHigh = value > 10000;
+
+    return (
+      <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-slate-100 min-w-[140px]">
+        
+        {/* Date */}
+        <p className="text-xs text-slate-400 font-semibold mb-1">
+          {label}
+        </p>
+
+        {/* Value */}
+        <div className="flex items-center justify-between">
+          <span className="text-sm text-slate-500">Revenue</span>
+          <span className={`text-base font-bold ${isHigh ? "text-emerald-600" : "text-blue-600"}`}>
+            ฿{value.toLocaleString()}
+          </span>
         </div>
-      );
-    }
-    return null;
-  };
+
+      </div>
+    );
+  }
+  return null;
+};
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 w-full h-full my-4">
