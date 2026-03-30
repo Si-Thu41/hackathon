@@ -11,8 +11,8 @@ import AddMedicineModal, { RemoveMedicineButton } from './addMedicineModal';
 import AlertsPanel from './alertsPanel';
 import { ExpiryTracker, DeadStock, RestockAlerts } from './inventoryInsights';
 import SalesFinance from './salesFinance';
-import type { Medicine } from './adminPanel';
-import { useState } from 'react';
+import React, { useState } from 'react'; // Added useState import
+import { Medicine } from './adminPanel';
 
 type Props = {
   medicines: Medicine[];
@@ -21,7 +21,7 @@ type Props = {
   lowStockCount: number;
 };
 
-export default function AdminShell({ medicines, totalSales, totalOrders, lowStockCount }: Props) {
+const AdminShell: React.FC<Props> = ({ medicines, totalSales, totalOrders, lowStockCount }) => { // Changed AdminShellProps to Props
   const [activeTab, setActiveTab] = useState<'dashboard' | 'inventory' | 'sales'>('dashboard');
   const [inventoryTab, setInventoryTab] = useState<'all' | 'expiry' | 'deadstock' | 'restock'>('all');
 
@@ -200,7 +200,7 @@ export default function AdminShell({ medicines, totalSales, totalOrders, lowStoc
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-slate-100 bg-white">
-                            {medicines.map((medicine) => (
+                            {medicines.map((medicine: Medicine) => ( // Added explicit type annotation to fix implicit 'any' type error
                               <tr className="hover:bg-slate-50 transition-colors" key={medicine.medicine_id}>
                                 <td className="px-4 py-4 text-slate-400 text-xs">{medicine.medicine_id}</td>
                                 <td className="px-4 py-4 font-bold text-slate-800">
@@ -262,4 +262,6 @@ export default function AdminShell({ medicines, totalSales, totalOrders, lowStoc
       </div>
     </div>
   );
-}
+};
+
+export default AdminShell;

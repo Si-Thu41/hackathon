@@ -3,12 +3,11 @@ import AdminPanel from "./adminPanel/adminPanel";
 import PharmacistPanel from "./pharmacistPanel/pharmacistPanel";
 import Link from "next/link";
 
-export default async function DashboardPage({searchParams}:{searchParams:Promise<{userrole:string}>})
+export default async function DashboardPage({searchParams}:{searchParams:Promise<{userrole?:string}>})
  {
-  const { sessionClaims } = await auth();
-  const params=await searchParams;
-  const userRole=params.userrole;
-  console.log(userRole)
+  const { sessionClaims } = await auth.protect();
+  const params = await searchParams;
+  const userRole = params.userrole;
 
   // Grab the role from Clerk metadata
   const role = sessionClaims?.metadata?.role;

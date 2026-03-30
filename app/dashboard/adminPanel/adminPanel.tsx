@@ -5,7 +5,7 @@ import InventoryHealth from "./inventoryHealth";
 import SalesPerformance from './salesPerformance';
 import PaymentMethods from './paymentMethods';
 import RevenuePerformance from './revenuePerformance';
-import AdminShell from './adminShell';
+import AdminShell from './adminShell'; // Removed .tsx extension to comply with TypeScript config
 
 export type Medicine = {
   medicine_id: number;
