@@ -10,7 +10,7 @@ export function AddMedicineModal({ onSuccess }: { onSuccess?: () => void }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "", generic_name: "", dosage: "", form: "tablet",
-    manufacturer: "", price: "", stock_quantity: "",
+    manufacturer: "", price: "", stock_quantity: "", expiry_date: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -30,10 +30,11 @@ export function AddMedicineModal({ onSuccess }: { onSuccess?: () => void }) {
         manufacturer: formData.manufacturer,
         price: Number(formData.price),
         stock_quantity: Number(formData.stock_quantity),
+        expiry_date: formData.expiry_date || null,
       }]);
       if (error) throw error;
       setIsOpen(false);
-      setFormData({ name: "", generic_name: "", dosage: "", form: "tablet", manufacturer: "", price: "", stock_quantity: "" });
+      setFormData({ name: "", generic_name: "", dosage: "", form: "tablet", manufacturer: "", price: "", stock_quantity: "", expiry_date: "" });
       onSuccess?.();
     } catch (error) {
       console.error("Error adding medicine:", error);
@@ -113,6 +114,11 @@ export function AddMedicineModal({ onSuccess }: { onSuccess?: () => void }) {
                   <input required type="number" name="stock_quantity" value={formData.stock_quantity} onChange={handleChange}
                     placeholder="0"
                     className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono" />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Expiry Date</label>
+                  <input type="date" name="expiry_date" value={formData.expiry_date} onChange={handleChange}
+                    className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
               </div>
               <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 mt-6">

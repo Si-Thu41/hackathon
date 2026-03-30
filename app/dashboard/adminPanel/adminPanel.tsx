@@ -16,6 +16,7 @@ export type Medicine = {
   manufacturer: string;
   price: number;
   stock_quantity: number;
+  expiry_date: string | null;
 };
 
 type Sale = {

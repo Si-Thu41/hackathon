@@ -58,6 +58,7 @@ async function handleSale(e: React.SubmitEvent<HTMLFormElement>) {
       {
         payment_method,
         revenue,
+        sale_date: new Date().toISOString().split("T")[0],
       },
     ])
     .select()
