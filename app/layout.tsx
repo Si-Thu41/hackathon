@@ -1,5 +1,14 @@
 import type { Metadata } from 'next'
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import {
+  ClerkDegraded,
+  ClerkFailed,
+  ClerkLoaded,
+  ClerkProvider,
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
@@ -31,20 +40,28 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider>
           <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <Show when="signed-out">
-          
-                <SignInButton  >
-                <SignText displayText='Sign In'/>
+            <ClerkLoaded>
+              <Show when="signed-out">
+                <SignInButton>
+                  <SignText displayText='Sign In' />
                 </SignInButton>
 
-                 <SignUpButton >
-                 <SignText displayText='Sign Up'/>
-                 </SignUpButton>
-            
-            </Show>
-            <Show when="signed-in">
-              <UserButton />
-            </Show>
+                <SignUpButton>
+                  <SignText displayText='Sign Up' />
+                </SignUpButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton />
+              </Show>
+            </ClerkLoaded>
+
+            <ClerkFailed>
+              <AuthUnavailableNotice />
+            </ClerkFailed>
+
+            <ClerkDegraded>
+              <AuthUnavailableNotice />
+            </ClerkDegraded>
           </header>
           {children}
         </ClerkProvider>
@@ -55,4 +72,12 @@ export default function RootLayout({
 
 function SignText({displayText}:{displayText:string}){
   return <p className='bg-green-400 py-2 px-4 rounded-lg cursor-pointer'>{displayText}</p>
+}
+
+function AuthUnavailableNotice() {
+  return (
+    <p className="rounded-lg bg-amber-100 px-4 py-2 text-sm font-medium text-amber-800">
+      Auth temporarily unavailable
+    </p>
+  );
 }

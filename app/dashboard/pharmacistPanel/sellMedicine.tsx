@@ -4,7 +4,15 @@ import type { Medicine } from "../adminPanel/adminPanel";
 import { getSupabase } from "@/utils/supabase";
 import React from "react";
 
-export default function SellMedicineForm({ medicines,count }:{medicines:Medicine[],count:number}) {
+export default function SellMedicineForm({
+  medicines,
+  count,
+  onSaleComplete,
+}: {
+  medicines: Medicine[];
+  count: number;
+  onSaleComplete?: () => Promise<void> | void;
+}) {
     const initialSaleState = {
   medicine_id: 0,
   quantity: 0,
@@ -106,6 +114,11 @@ const { error: stockError } = await supabase
 if (stockError) {
   console.error("Stock update error:", stockError);
 }
+
+if (onSaleComplete) {
+  await onSaleComplete();
+}
+
 setIsLoading(false)
 setNewSale(initialSaleState)
 }
