@@ -11,6 +11,7 @@ import AddMedicineModal, { RemoveMedicineButton } from './addMedicineModal';
 import AlertsPanel from './alertsPanel';
 import { ExpiryTracker, DeadStock, RestockAlerts } from './inventoryInsights';
 import SalesFinance from './salesFinance';
+import AiSummary from './aiSummary';
 import React, { useState, useRef, useCallback } from 'react';
 import { Medicine } from './adminPanel';
 import { getSupabase } from '@/utils/supabase';
@@ -242,6 +243,7 @@ const AdminShell: React.FC<Props> = ({ medicines: initialMedicines, totalSales: 
             {/* ══ DASHBOARD TAB ══ */}
             {activeTab === 'dashboard' && (
               <>
+                <AiSummary lang={lang} />
                 <AlertsPanel medicines={medicines} />
                 <KpiCards />
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
