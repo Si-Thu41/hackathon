@@ -22,7 +22,7 @@ export default function SellMedicineForm({
     const [newSale, setNewSale]=React.useState(initialSaleState); 
     const [isLoading,setIsLoading]=React.useState(false)
     const selectedMed = medicines.find(m => m.medicine_id === newSale.medicine_id);
-    const unit_price = selectedMed ? selectedMed.price / 10 : 0;
+    const unit_price = selectedMed ? selectedMed.price / (selectedMed.cards_per_box || 10) : 0;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
   const { name, value } = e.target;
@@ -40,7 +40,7 @@ export default function SellMedicineForm({
       (m) => m.medicine_id === updated.medicine_id
     );
 
-    const unitPrice = selectedMedicine ? selectedMedicine.price / 10 : 0;
+    const unitPrice = selectedMedicine ? selectedMedicine.price / (selectedMedicine.cards_per_box || 10) : 0;
 
     // Calculate revenue based on quantity and unit price
     updated.revenue = unitPrice * updated.quantity;
@@ -178,7 +178,7 @@ setNewSale(initialSaleState)
             <div className="flex items-center justify-between text-sm text-slate-600">
               <span>Price per card</span>
               <span className="font-mono font-semibold text-slate-700">
-                ฿{((medicines.find(m => m.medicine_id === newSale.medicine_id)?.price ?? 0) / 10).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ฿{(unit_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
             <div className="flex items-center justify-between text-sm text-slate-600">

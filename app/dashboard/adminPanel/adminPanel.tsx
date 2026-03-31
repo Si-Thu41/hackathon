@@ -12,12 +12,14 @@ export type Medicine = {
   unit_code: string | null;
   name: string;
   generic_name: string;
+  category: string | null;
   dosage: string;
   form: string;
   manufacturer: string;
   price: number;
   stock_quantity: number;
   expiry_date: string | null;
+  cards_per_box: number;
   image_url: string | null;
 };
 
