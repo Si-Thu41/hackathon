@@ -21,17 +21,17 @@ export default function SellMedicineForm({
 };
     const [newSale, setNewSale]=React.useState(initialSaleState); 
     const [isLoading,setIsLoading]=React.useState(false)
-    const box_price= medicines.find(m=>m.medicine_id==newSale.medicine_id)?.price;
-    const unit_price=box_price!/10
+    const selectedMed = medicines.find(m => m.medicine_id === newSale.medicine_id);
+    const unit_price = selectedMed ? selectedMed.price / 10 : 0;
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
   const { name, value } = e.target;
 
   setNewSale((prev) => {
-    const updated = {
+    let updated = {
       ...prev,
       [name]:
-        name === "quantity" || name === "medicine_id"
+        name === "quantity" || name === "medicine_id" || name === "revenue"
           ? Number(value)
           : value,
     };
@@ -42,10 +42,10 @@ export default function SellMedicineForm({
 
     const unitPrice = selectedMedicine ? selectedMedicine.price / 10 : 0;
 
-    return {
-      ...updated,
-      revenue: unitPrice * updated.quantity,
-    };
+    // Calculate revenue based on quantity and unit price
+    updated.revenue = unitPrice * updated.quantity;
+
+    return updated;
   });
 }
 
@@ -165,26 +165,32 @@ setNewSale(initialSaleState)
             onChange={handleChange}
             value={newSale.quantity}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            placeholder="Enter number of cards"
+            placeholder="Enter quantity"
             required
+            min="1"
           />
         </div>
 
-          <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Price 
-          </label>
-          <input
-            readOnly
-            type="number"
-            name="revenue"
-            onChange={handleChange}
-            value={newSale.revenue}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            placeholder="Enter the total amount."
-            required
-          />
-        </div>
+        {/* Price breakdown — updates automatically as quantity changes */}
+        {newSale.medicine_id !== 0 && (
+          <div className="rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-blue-400">Price Breakdown</p>
+            <div className="flex items-center justify-between text-sm text-slate-600">
+              <span>Price per card</span>
+              <span className="font-mono font-semibold text-slate-700">
+                ฿{((medicines.find(m => m.medicine_id === newSale.medicine_id)?.price ?? 0) / 10).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm text-slate-600">
+              <span>Number of cards</span>
+              <span className="font-mono font-semibold text-slate-700">× {newSale.quantity || 0}</span>
+            </div>
+            <div className="border-t border-blue-200 pt-2 flex items-center justify-between">
+              <span className="text-sm font-bold text-slate-800">Total</span>
+              <span className="text-lg font-black text-blue-600">฿{newSale.revenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            </div>
+          </div>
+        )}
 
         {/* Payment Method */}
         <div>

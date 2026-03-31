@@ -9,6 +9,7 @@ import AdminShell from './adminShell'; // Removed .tsx extension to comply with 
 
 export type Medicine = {
   medicine_id: number;
+  unit_code: string | null;
   name: string;
   generic_name: string;
   dosage: string;
@@ -17,6 +18,7 @@ export type Medicine = {
   price: number;
   stock_quantity: number;
   expiry_date: string | null;
+  image_url: string | null;
 };
 
 type Sale = {
