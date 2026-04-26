@@ -123,10 +123,8 @@ function RevenueChart({ sales }: { sales: SaleRow[] }) {
             <AreaChart data={data}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="label" />
-              <YAxis tickFormatter={(v) => `฿${v}`} />
-              <Tooltip
-                formatter={(value: number) => `฿${value.toLocaleString()}`}
-              />
+<YAxis tickFormatter={(v) => `฿${Number(v ?? 0).toLocaleString()}`} />              <Tooltip
+formatter={(value) => `฿${Number(value ?? 0).toLocaleString()}`}              />
               <Area
                 type="monotone"
                 dataKey="revenue"
